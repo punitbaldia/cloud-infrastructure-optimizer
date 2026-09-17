@@ -216,3 +216,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local capstone state and secrets
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+.env.*
+!.env.example

@@ -1,0 +1,138 @@
+{
+  "$defs": {
+    "Metric": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Value"
+        },
+        "unit": {
+          "title": "Unit",
+          "type": "string"
+        },
+        "aggregation": {
+          "enum": [
+            "average",
+            "maximum",
+            "minimum",
+            "sum"
+          ],
+          "title": "Aggregation",
+          "type": "string"
+        },
+        "sample_count": {
+          "minimum": 0,
+          "title": "Sample Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "unit",
+        "aggregation",
+        "sample_count"
+      ],
+      "title": "Metric",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "resource_id": {
+      "title": "Resource Id",
+      "type": "string"
+    },
+    "account_id": {
+      "title": "Account Id",
+      "type": "string"
+    },
+    "region": {
+      "title": "Region",
+      "type": "string"
+    },
+    "resource_type": {
+      "enum": [
+        "ec2",
+        "rds"
+      ],
+      "title": "Resource Type",
+      "type": "string"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "window_start": {
+      "format": "date-time",
+      "title": "Window Start",
+      "type": "string"
+    },
+    "window_end": {
+      "format": "date-time",
+      "title": "Window End",
+      "type": "string"
+    },
+    "configuration": {
+      "additionalProperties": true,
+      "title": "Configuration",
+      "type": "object"
+    },
+    "tags": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Tags",
+      "type": "object"
+    },
+    "metrics": {
+      "additionalProperties": {
+        "$ref": "#/$defs/Metric"
+      },
+      "title": "Metrics",
+      "type": "object"
+    },
+    "data_quality": {
+      "enum": [
+        "complete",
+        "partial",
+        "insufficient"
+      ],
+      "title": "Data Quality",
+      "type": "string"
+    },
+    "missing_metrics": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Missing Metrics",
+      "type": "array"
+    }
+  },
+  "required": [
+    "resource_id",
+    "account_id",
+    "region",
+    "resource_type",
+    "observed_at",
+    "window_start",
+    "window_end",
+    "data_quality"
+  ],
+  "title": "ResourceSnapshot",
+  "type": "object"
+}

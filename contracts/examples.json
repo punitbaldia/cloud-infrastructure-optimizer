@@ -1,0 +1,372 @@
+{
+  "scan_created": {
+    "id": "306f816d-954d-4c79-a9d1-f2a571447455",
+    "status": "queued",
+    "message": "Mock scan queued",
+    "created_at": "2026-09-17T13:18:31.835645Z",
+    "completed_at": null,
+    "data_source": "mock"
+  },
+  "scan_completed": {
+    "id": "306f816d-954d-4c79-a9d1-f2a571447455",
+    "status": "succeeded",
+    "message": "Collected 4 mock resources and 15 daily costs.",
+    "created_at": "2026-09-17T13:18:31.835645Z",
+    "completed_at": "2026-09-17T13:18:31.863515Z",
+    "data_source": "mock"
+  },
+  "resources": {
+    "items": [
+      {
+        "schema_version": "1.0",
+        "resource_id": "demo-rds",
+        "account_id": "000000000000",
+        "region": "ap-south-1",
+        "resource_type": "rds",
+        "observed_at": "2026-09-17T13:18:31.848927Z",
+        "window_start": "2026-09-03T13:18:31.848927Z",
+        "window_end": "2026-09-17T13:18:31.848927Z",
+        "configuration": {
+          "state": "available",
+          "instance_type": "demo.small",
+          "demo_hourly_price_usd": "0.02"
+        },
+        "tags": {
+          "Name": "demo-rds",
+          "optimizer:managed": "true"
+        },
+        "metrics": {
+          "cpu_percent": {
+            "value": 8.0,
+            "unit": "Percent",
+            "aggregation": "maximum",
+            "sample_count": 336
+          },
+          "network_bytes_per_hour": {
+            "value": 10000.0,
+            "unit": "Bytes/hour",
+            "aggregation": "maximum",
+            "sample_count": 336
+          }
+        },
+        "data_quality": "partial",
+        "missing_metrics": [
+          "memory_available_bytes"
+        ],
+        "id": "73950824-4885-4661-8ec7-03d970307905",
+        "data_source": "mock"
+      },
+      {
+        "schema_version": "1.0",
+        "resource_id": "i-demo-idle",
+        "account_id": "000000000000",
+        "region": "ap-south-1",
+        "resource_type": "ec2",
+        "observed_at": "2026-09-17T13:18:31.848927Z",
+        "window_start": "2026-09-03T13:18:31.848927Z",
+        "window_end": "2026-09-17T13:18:31.848927Z",
+        "configuration": {
+          "state": "running",
+          "instance_type": "demo.small",
+          "demo_hourly_price_usd": "0.02"
+        },
+        "tags": {
+          "Name": "i-demo-idle",
+          "optimizer:managed": "true"
+        },
+        "metrics": {
+          "cpu_percent": {
+            "value": 1.2,
+            "unit": "Percent",
+            "aggregation": "maximum",
+            "sample_count": 336
+          },
+          "network_bytes_per_hour": {
+            "value": 100.0,
+            "unit": "Bytes/hour",
+            "aggregation": "maximum",
+            "sample_count": 336
+          }
+        },
+        "data_quality": "complete",
+        "missing_metrics": [],
+        "id": "90506dd6-4d23-4b1b-985b-be8399b2e140",
+        "data_source": "mock"
+      },
+      {
+        "schema_version": "1.0",
+        "resource_id": "i-demo-missing",
+        "account_id": "000000000000",
+        "region": "ap-south-1",
+        "resource_type": "ec2",
+        "observed_at": "2026-09-17T13:18:31.848927Z",
+        "window_start": "2026-09-03T13:18:31.848927Z",
+        "window_end": "2026-09-17T13:18:31.848927Z",
+        "configuration": {
+          "state": "running",
+          "instance_type": "demo.small",
+          "demo_hourly_price_usd": "0.02"
+        },
+        "tags": {
+          "Name": "i-demo-missing",
+          "optimizer:managed": "true"
+        },
+        "metrics": {
+          "cpu_percent": {
+            "value": null,
+            "unit": "Percent",
+            "aggregation": "maximum",
+            "sample_count": 0
+          },
+          "network_bytes_per_hour": {
+            "value": null,
+            "unit": "Bytes/hour",
+            "aggregation": "maximum",
+            "sample_count": 0
+          }
+        },
+        "data_quality": "insufficient",
+        "missing_metrics": [
+          "cpu_percent",
+          "network_bytes_per_hour"
+        ],
+        "id": "9f6577dc-7acb-4428-87ca-3139595543e8",
+        "data_source": "mock"
+      },
+      {
+        "schema_version": "1.0",
+        "resource_id": "i-demo-active",
+        "account_id": "000000000000",
+        "region": "ap-south-1",
+        "resource_type": "ec2",
+        "observed_at": "2026-09-17T13:18:31.848927Z",
+        "window_start": "2026-09-03T13:18:31.848927Z",
+        "window_end": "2026-09-17T13:18:31.848927Z",
+        "configuration": {
+          "state": "running",
+          "instance_type": "demo.small",
+          "demo_hourly_price_usd": "0.02"
+        },
+        "tags": {
+          "Name": "i-demo-active",
+          "optimizer:managed": "true"
+        },
+        "metrics": {
+          "cpu_percent": {
+            "value": 62.0,
+            "unit": "Percent",
+            "aggregation": "maximum",
+            "sample_count": 336
+          },
+          "network_bytes_per_hour": {
+            "value": 500000.0,
+            "unit": "Bytes/hour",
+            "aggregation": "maximum",
+            "sample_count": 336
+          }
+        },
+        "data_quality": "complete",
+        "missing_metrics": [],
+        "id": "d95f2000-87b5-4656-a358-b2535266af89",
+        "data_source": "mock"
+      }
+    ],
+    "total": 4,
+    "limit": 50,
+    "offset": 0,
+    "data_source": "mock"
+  },
+  "recommendations": {
+    "items": [
+      {
+        "id": "2942e068-bbee-4627-9a56-5328b1002af0",
+        "resource_id": "i-demo-idle",
+        "finding_type": "idle_ec2",
+        "title": "Review idle EC2 instance",
+        "explanation": "Low maximum CPU and network activity over a sustained observation window.",
+        "evidence": [
+          "Maximum CPU: 1.2%",
+          "Maximum network: 100.0 Bytes/hour",
+          "Observation window: 2026-09-03T13:18:31.848927+00:00 to 2026-09-17T13:18:31.848927+00:00"
+        ],
+        "proposed_action": "stop_ec2",
+        "risk_level": "medium",
+        "estimated_monthly_savings": "14.60",
+        "currency": "USD",
+        "savings_assumptions": [
+          "Synthetic USD price, not an AWS quote; 730 stopped compute hours/month. Storage and other charges excluded."
+        ],
+        "status": "open",
+        "data_source": "mock",
+        "created_at": "2026-09-17T13:18:31.861505Z",
+        "explanation_source": "mock"
+      },
+      {
+        "id": "c827cab7-3ca1-4ba2-9113-ca93957bf0bd",
+        "resource_id": null,
+        "finding_type": "cost_anomaly",
+        "title": "Unusual daily cost: Amazon EC2",
+        "explanation": "Completed daily spending exceeds twice the previous fourteen-day average.",
+        "evidence": [
+          "Account: 000000000000; service: Amazon EC2; cost basis: UnblendedCost",
+          "2026-09-16: 18.00 USD; baseline: 5.00 USD"
+        ],
+        "proposed_action": "investigate_cost",
+        "risk_level": "high",
+        "estimated_monthly_savings": null,
+        "currency": "USD",
+        "savings_assumptions": [],
+        "status": "open",
+        "data_source": "mock",
+        "created_at": "2026-09-17T13:18:31.861505Z",
+        "explanation_source": "mock"
+      }
+    ],
+    "total": 2,
+    "limit": 50,
+    "offset": 0,
+    "data_source": "mock"
+  },
+  "overview": {
+    "data_source": "mock",
+    "currency": "USD",
+    "month_to_date_cost": "88.00",
+    "cost_coverage": "Collected dates only; fixtures may not cover the full month.",
+    "estimated_monthly_savings": "14.60",
+    "observed_savings": null,
+    "resource_count": 4,
+    "open_recommendation_count": 2,
+    "critical_finding_count": 1,
+    "last_successful_scan_at": "2026-09-17T13:18:31.863515Z",
+    "daily_costs": [
+      {
+        "date": "2026-09-02",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-03",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-04",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-05",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-06",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-07",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-08",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-09",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-10",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-11",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-12",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-13",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-14",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-15",
+        "amount": "5.00"
+      },
+      {
+        "date": "2026-09-16",
+        "amount": "18.00"
+      }
+    ]
+  },
+  "approval_error": {
+    "error": {
+      "code": "approval_required",
+      "message": "Approve the recommendation first.",
+      "details": {}
+    }
+  },
+  "approved": {
+    "id": "2942e068-bbee-4627-9a56-5328b1002af0",
+    "resource_id": "i-demo-idle",
+    "finding_type": "idle_ec2",
+    "title": "Review idle EC2 instance",
+    "explanation": "Low maximum CPU and network activity over a sustained observation window.",
+    "evidence": [
+      "Maximum CPU: 1.2%",
+      "Maximum network: 100.0 Bytes/hour",
+      "Observation window: 2026-09-03T13:18:31.848927+00:00 to 2026-09-17T13:18:31.848927+00:00"
+    ],
+    "proposed_action": "stop_ec2",
+    "risk_level": "medium",
+    "estimated_monthly_savings": "14.60",
+    "currency": "USD",
+    "savings_assumptions": [
+      "Synthetic USD price, not an AWS quote; 730 stopped compute hours/month. Storage and other charges excluded."
+    ],
+    "status": "approved",
+    "data_source": "mock",
+    "created_at": "2026-09-17T13:18:31.861505Z",
+    "explanation_source": "mock"
+  },
+  "execution_request": {
+    "idempotency_key": "ce22ccfc-94d5-4a49-b1f9-b9e46a3af746"
+  },
+  "execution_created": {
+    "id": "558aca9e-c611-416d-a485-8dabaf560b4e",
+    "recommendation_id": "2942e068-bbee-4627-9a56-5328b1002af0",
+    "status": "queued",
+    "simulated": true,
+    "message": "Simulation queued",
+    "created_at": "2026-09-17T13:18:31.894275Z",
+    "completed_at": null
+  },
+  "execution_completed": {
+    "id": "558aca9e-c611-416d-a485-8dabaf560b4e",
+    "recommendation_id": "2942e068-bbee-4627-9a56-5328b1002af0",
+    "status": "succeeded",
+    "simulated": true,
+    "message": "Simulated EC2 stop succeeded. No AWS action occurred.",
+    "created_at": "2026-09-17T13:18:31.894275Z",
+    "completed_at": "2026-09-17T13:18:31.904215Z"
+  },
+  "executions": {
+    "items": [
+      {
+        "id": "558aca9e-c611-416d-a485-8dabaf560b4e",
+        "recommendation_id": "2942e068-bbee-4627-9a56-5328b1002af0",
+        "status": "succeeded",
+        "simulated": true,
+        "message": "Simulated EC2 stop succeeded. No AWS action occurred.",
+        "created_at": "2026-09-17T13:18:31.894275Z",
+        "completed_at": "2026-09-17T13:18:31.904215Z"
+      }
+    ],
+    "total": 1,
+    "limit": 50,
+    "offset": 0,
+    "data_source": "mock"
+  }
+}

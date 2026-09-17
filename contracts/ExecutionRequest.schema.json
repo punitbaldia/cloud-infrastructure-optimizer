@@ -1,0 +1,15 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "idempotency_key": {
+      "format": "uuid",
+      "title": "Idempotency Key",
+      "type": "string"
+    }
+  },
+  "required": [
+    "idempotency_key"
+  ],
+  "title": "ExecutionRequest",
+  "type": "object"
+}
