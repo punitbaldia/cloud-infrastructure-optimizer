@@ -1,0 +1,140 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "format": "uuid",
+      "title": "Id",
+      "type": "string"
+    },
+    "resource_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Resource Id"
+    },
+    "finding_type": {
+      "enum": [
+        "idle_ec2",
+        "oversized_rds",
+        "cost_anomaly"
+      ],
+      "title": "Finding Type",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "explanation": {
+      "title": "Explanation",
+      "type": "string"
+    },
+    "evidence": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence",
+      "type": "array"
+    },
+    "proposed_action": {
+      "enum": [
+        "stop_ec2",
+        "review_rds",
+        "investigate_cost"
+      ],
+      "title": "Proposed Action",
+      "type": "string"
+    },
+    "risk_level": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ],
+      "title": "Risk Level",
+      "type": "string"
+    },
+    "estimated_monthly_savings": {
+      "anyOf": [
+        {
+          "minimum": 0.0,
+          "type": "number"
+        },
+        {
+          "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Estimated Monthly Savings"
+    },
+    "currency": {
+      "default": "USD",
+      "title": "Currency",
+      "type": "string"
+    },
+    "savings_assumptions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Savings Assumptions",
+      "type": "array"
+    },
+    "status": {
+      "default": "open",
+      "enum": [
+        "open",
+        "approved",
+        "dismissed",
+        "resolved"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "data_source": {
+      "default": "mock",
+      "enum": [
+        "mock",
+        "aws"
+      ],
+      "title": "Data Source",
+      "type": "string"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "explanation_source": {
+      "default": "mock",
+      "enum": [
+        "mock",
+        "claude",
+        "rules_fallback"
+      ],
+      "title": "Explanation Source",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "finding_type",
+    "title",
+    "explanation",
+    "evidence",
+    "proposed_action",
+    "risk_level",
+    "created_at"
+  ],
+  "title": "Recommendation",
+  "type": "object"
+}
