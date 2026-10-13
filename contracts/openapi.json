@@ -2,10 +2,142 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Cloud Infrastructure Optimizer",
-    "description": "Local capstone demo. Mock data and simulated actions; authentication is not implemented.",
-    "version": "0.2.0"
+    "description": "Cloud optimization, evidence-based advice, and approval-controlled execution.",
+    "version": "0.3.0"
   },
   "paths": {
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login",
+        "operationId": "login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Me",
+        "operationId": "me_api_v1_auth_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Logout",
+        "operationId": "logout_api_v1_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/auth/password": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Change Password",
+        "description": "Verify current credentials, rotate the password, and revoke every session atomically.",
+        "operationId": "change_password_api_v1_auth_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordChangeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/api/v1/health": {
       "get": {
         "tags": [
@@ -22,7 +154,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/api/v1/ready": {
@@ -41,7 +178,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/api/v1/scans": {
@@ -62,7 +204,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     },
     "/api/v1/scans/{scan_id}": {
@@ -72,6 +219,11 @@
         ],
         "summary": "Get Scan",
         "operationId": "get_scan_api_v1_scans__scan_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "scan_id",
@@ -115,6 +267,11 @@
         ],
         "summary": "Resources",
         "operationId": "resources_api_v1_resources_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "limit",
@@ -191,6 +348,11 @@
         ],
         "summary": "Resource Detail",
         "operationId": "resource_detail_api_v1_resources__resource_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "resource_id",
@@ -234,6 +396,11 @@
         ],
         "summary": "Recommendations",
         "operationId": "recommendations_api_v1_recommendations_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "status",
@@ -312,6 +479,11 @@
         ],
         "summary": "Recommendation Detail",
         "operationId": "recommendation_detail_api_v1_recommendations__recommendation_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "recommendation_id",
@@ -355,6 +527,11 @@
         ],
         "summary": "Approve",
         "operationId": "approve_api_v1_recommendations__recommendation_id__approve_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "recommendation_id",
@@ -398,6 +575,11 @@
         ],
         "summary": "Dismiss",
         "operationId": "dismiss_api_v1_recommendations__recommendation_id__dismiss_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "recommendation_id",
@@ -441,6 +623,11 @@
         ],
         "summary": "Execute",
         "operationId": "execute_api_v1_recommendations__recommendation_id__execute_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "recommendation_id",
@@ -494,6 +681,11 @@
         ],
         "summary": "Executions",
         "operationId": "executions_api_v1_executions_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "limit",
@@ -550,6 +742,11 @@
         ],
         "summary": "Execution Detail",
         "operationId": "execution_detail_api_v1_executions__execution_id__get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
         "parameters": [
           {
             "name": "execution_id",
@@ -604,7 +801,266 @@
               }
             }
           }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/recommendations/{recommendation_id}/preview": {
+      "get": {
+        "tags": [
+          "Executions"
+        ],
+        "summary": "Preview",
+        "operationId": "preview_api_v1_recommendations__recommendation_id__preview_get",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "recommendation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Recommendation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
         }
+      }
+    },
+    "/api/v1/recommendations/{recommendation_id}/terraform": {
+      "post": {
+        "tags": [
+          "Executions"
+        ],
+        "summary": "Export Terraform",
+        "operationId": "export_terraform_api_v1_recommendations__recommendation_id__terraform_post",
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "recommendation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Recommendation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/settings": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Settings",
+        "operationId": "settings_api_v1_settings_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Update Settings",
+        "operationId": "update_settings_api_v1_settings_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PreferencesUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/connections": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Connections",
+        "operationId": "connections_api_v1_connections_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/connections/primary/validate": {
+      "post": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Validate",
+        "operationId": "validate_api_v1_connections_primary_validate_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/notifications": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Notifications",
+        "operationId": "notifications_api_v1_notifications_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
+    "/api/v1/audit": {
+      "get": {
+        "tags": [
+          "Settings"
+        ],
+        "summary": "Audit",
+        "operationId": "audit_api_v1_audit_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
       }
     }
   },
@@ -720,6 +1176,28 @@
         "type": "object",
         "title": "HTTPValidationError"
       },
+      "LoginRequest": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "password"
+        ],
+        "title": "LoginRequest"
+      },
       "Metric": {
         "properties": {
           "value": {
@@ -766,7 +1244,10 @@
         "properties": {
           "data_source": {
             "type": "string",
-            "const": "mock",
+            "enum": [
+              "mock",
+              "aws"
+            ],
             "title": "Data Source",
             "default": "mock"
           },
@@ -871,7 +1352,10 @@
           },
           "data_source": {
             "type": "string",
-            "const": "mock",
+            "enum": [
+              "mock",
+              "aws"
+            ],
             "title": "Data Source",
             "default": "mock"
           }
@@ -909,7 +1393,10 @@
           },
           "data_source": {
             "type": "string",
-            "const": "mock",
+            "enum": [
+              "mock",
+              "aws"
+            ],
             "title": "Data Source",
             "default": "mock"
           }
@@ -947,7 +1434,10 @@
           },
           "data_source": {
             "type": "string",
-            "const": "mock",
+            "enum": [
+              "mock",
+              "aws"
+            ],
             "title": "Data Source",
             "default": "mock"
           }
@@ -961,6 +1451,57 @@
           "offset"
         ],
         "title": "Page[ResourceResponse]"
+      },
+      "PasswordChangeRequest": {
+        "properties": {
+          "current_password": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "format": "password",
+            "title": "Current Password",
+            "writeOnly": true
+          },
+          "new_password": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 12,
+            "format": "password",
+            "title": "New Password",
+            "writeOnly": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "current_password",
+          "new_password"
+        ],
+        "title": "PasswordChangeRequest"
+      },
+      "PreferencesUpdate": {
+        "properties": {
+          "scan_interval_minutes": {
+            "type": "integer",
+            "maximum": 1440.0,
+            "minimum": 15.0,
+            "title": "Scan Interval Minutes"
+          },
+          "scheduled_scans": {
+            "type": "boolean",
+            "title": "Scheduled Scans"
+          },
+          "notifications_enabled": {
+            "type": "boolean",
+            "title": "Notifications Enabled"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scan_interval_minutes",
+          "scheduled_scans",
+          "notifications_enabled"
+        ],
+        "title": "PreferencesUpdate"
       },
       "Recommendation": {
         "properties": {
@@ -1104,6 +1645,15 @@
             "title": "Schema Version",
             "default": "1.0"
           },
+          "data_source": {
+            "type": "string",
+            "enum": [
+              "mock",
+              "aws"
+            ],
+            "title": "Data Source",
+            "default": "mock"
+          },
           "resource_id": {
             "type": "string",
             "title": "Resource Id"
@@ -1178,12 +1728,6 @@
             "type": "string",
             "format": "uuid",
             "title": "Id"
-          },
-          "data_source": {
-            "type": "string",
-            "const": "mock",
-            "title": "Data Source",
-            "default": "mock"
           }
         },
         "additionalProperties": false,
@@ -1241,7 +1785,10 @@
           },
           "data_source": {
             "type": "string",
-            "const": "mock",
+            "enum": [
+              "mock",
+              "aws"
+            ],
             "title": "Data Source",
             "default": "mock"
           }
@@ -1295,6 +1842,12 @@
           "type"
         ],
         "title": "ValidationError"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "type": "http",
+        "scheme": "bearer"
       }
     }
   }

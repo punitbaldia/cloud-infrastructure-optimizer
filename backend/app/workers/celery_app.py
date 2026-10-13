@@ -7,4 +7,8 @@ celery_app.conf.update(task_serializer='json', accept_content=['json'], timezone
                        broker_connection_retry_on_startup=True,
                        task_soft_time_limit=180, task_time_limit=210,
                        task_publish_retry=False, broker_connection_timeout=3)
+celery_app.conf.beat_schedule = {
+    'scheduled-scans': {'task': 'optimizer.scheduled_scan', 'schedule': 60.0},
+    'notifications': {'task': 'optimizer.deliver_notifications', 'schedule': 60.0},
+}
 

@@ -26,7 +26,8 @@ def detect(snapshots, costs):
     for r in snapshots:
         if not idle_candidate(r):
             continue
-        price = r.configuration.get('demo_hourly_price_usd')
+        price = (r.configuration.get('demo_hourly_price_usd') if r.data_source=='mock'
+                 else r.configuration.get('on_demand_hourly_usd') if r.configuration.get('pricing_status')=='available' else None)
         savings = (Decimal(price)*Decimal(730)).quantize(Decimal('0.01')) if price is not None else None
         findings.append(Recommendation(
             id=uuid4(), resource_id=r.resource_id, finding_type='idle_ec2',
@@ -37,8 +38,26 @@ def detect(snapshots, costs):
                       f'Observation window: {r.window_start.isoformat()} to {r.window_end.isoformat()}'],
             proposed_action='stop_ec2', risk_level='medium',
             estimated_monthly_savings=savings,
-            savings_assumptions=['Synthetic USD price, not an AWS quote; 730 stopped compute hours/month. Storage and other charges excluded.'] if savings is not None else [],
+            savings_assumptions=([('Synthetic USD price, not an AWS quote.' if r.data_source=='mock'
+                else 'AWS public On-Demand USD rate; not your effective bill. Savings Plans, Reserved Instances, credits and Free Tier can reduce or eliminate savings.'),
+                'Assumes 730 stopped compute hours/month. Storage, IP, data transfer and other charges excluded.'] if savings is not None else []),
             created_at=now()))
+    for r in snapshots:
+        keys = ['cpu_percent', 'freeable_memory_bytes', 'database_connections', 'read_iops', 'write_iops']
+        if r.resource_type != 'rds' or r.data_quality != 'complete' or r.configuration.get('state')!='available' or r.window_end-r.window_start < timedelta(days=7):
+            continue
+        if any(k not in r.metrics or r.metrics[k].value is None or r.metrics[k].sample_count < 168 for k in keys):
+            continue
+        expected=[('Percent','maximum'),('Bytes','minimum'),('Count','maximum'),('Count/Second','maximum'),('Count/Second','maximum')]
+        if any((r.metrics[k].unit,r.metrics[k].aggregation)!=spec for k,spec in zip(keys,expected)):
+            continue
+        if (r.metrics['cpu_percent'].value < 15 and r.metrics['freeable_memory_bytes'].value > 4_000_000_000
+            and r.metrics['database_connections'].value < 10 and r.metrics['read_iops'].value < 10 and r.metrics['write_iops'].value < 10):
+            findings.append(Recommendation(id=uuid4(),resource_id=r.resource_id,finding_type='oversized_rds',
+                title='Review database capacity',explanation='Low CPU, connections and I/O with substantial available memory suggest a capacity review. Validate workload peaks before resizing.',
+                evidence=[f'{key}: {r.metrics[key].value} {r.metrics[key].unit}' for key in keys],
+                proposed_action='review_rds',risk_level='high',created_at=now(),
+                savings_assumptions=['Advisory only. Target class, memory capacity, workload peaks and pricing require validation.']))
     groups = defaultdict(dict)
     for cost in costs:
         if not cost.estimated:

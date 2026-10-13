@@ -8,8 +8,9 @@ from uuid import uuid4
 with tempfile.TemporaryDirectory(prefix='optimizer-examples-') as temporary:
     os.environ['DATABASE_URL'] = 'sqlite:///' + (Path(temporary) / 'demo.db').as_posix()
     os.environ['JOB_MODE'] = 'local'
+    os.environ['AUTH_ENABLED'] = 'false'
     os.environ['EXPLANATION_MODE'] = 'mock'
-    os.environ['ADAPTER_MODULE'] = 'app.services.mock_provider'
+    os.environ['ADAPTER_MODULE'] = 'app.cloud.mock'
     from fastapi.testclient import TestClient
     from app.database import Base, engine
     from app.main import app

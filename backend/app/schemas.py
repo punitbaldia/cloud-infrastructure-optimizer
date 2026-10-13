@@ -7,7 +7,7 @@ from pydantic import AwareDatetime, BaseModel, ConfigDict, Field, model_validato
 
 
 class ContractModel(BaseModel):
-    model_config = ConfigDict(extra="forbid")
+    model_config = ConfigDict(extra="forbid", allow_inf_nan=False)
 
 
 class Metric(ContractModel):
@@ -19,6 +19,7 @@ class Metric(ContractModel):
 
 class ResourceSnapshot(ContractModel):
     schema_version: Literal["1.0"] = "1.0"
+    data_source: Literal["mock", "aws"] = "mock"
     resource_id: str
     account_id: str
     region: str
@@ -43,7 +44,7 @@ class DailyCost(ContractModel):
     date: date
     account_id: str
     service: str
-    amount: Decimal = Field(ge=0)
+    amount: Decimal
     currency: str = Field(default='USD', pattern='^[A-Z]{3}$')
     cost_basis: str = 'UnblendedCost'
     estimated: bool = False
@@ -91,12 +92,12 @@ class Page(ContractModel, Generic[T]):
     total: int
     limit: int
     offset: int
-    data_source: Literal['mock'] = 'mock'
+    data_source: Literal['mock', 'aws'] = 'mock'
 
 
 class ResourceResponse(ResourceSnapshot):
     id: UUID
-    data_source: Literal['mock'] = 'mock'
+    data_source: Literal['mock', 'aws'] = 'mock'
 
 
 class ScanResponse(ContractModel):
@@ -105,7 +106,7 @@ class ScanResponse(ContractModel):
     message: str
     created_at: AwareDatetime
     completed_at: AwareDatetime | None = None
-    data_source: Literal['mock'] = 'mock'
+    data_source: Literal['mock', 'aws'] = 'mock'
 
 
 class CostPoint(ContractModel):
@@ -114,7 +115,7 @@ class CostPoint(ContractModel):
 
 
 class OverviewResponse(ContractModel):
-    data_source: Literal['mock'] = 'mock'
+    data_source: Literal['mock', 'aws'] = 'mock'
     currency: str
     month_to_date_cost: Decimal
     cost_coverage: str
