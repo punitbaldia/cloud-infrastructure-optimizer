@@ -16,8 +16,22 @@ class Settings(BaseSettings):
     explanation_mode: Literal['mock', 'claude'] = 'mock'
     anthropic_api_key: str = ''
     claude_model: str = ''
-    adapter_module: str = 'app.services.mock_provider'
+    adapter_module: str = 'app.cloud.mock'
     recommendation_ttl_hours: int = 24
+    cloud_mode: Literal['mock', 'aws'] = 'mock'
+    auth_enabled: bool = True
+    admin_username: str = 'admin'
+    admin_password: str = ''
+    aws_account_id: str = '000000000000'
+    aws_region: str = 'ap-south-1'
+    aws_profile: str = ''
+    aws_role_arn: str = ''
+    aws_external_id: str = ''
+    aws_execution_role_arn: str = ''
+    live_execution_enabled: bool = False
+    slack_webhook_url: str = ''
+    ses_sender: str = ''
+    alert_recipient: str = ''
 
 
 @lru_cache

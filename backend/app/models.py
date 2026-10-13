@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 from uuid import uuid4
 
-from sqlalchemy import JSON, ForeignKey, String, UniqueConstraint
+from sqlalchemy import JSON, ForeignKey, String, UniqueConstraint, Integer, Boolean
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.database import Base
@@ -51,6 +51,7 @@ class Scan(Base):
     created_at: Mapped[str] = mapped_column(String(40), default=now)
     completed_at: Mapped[str | None] = mapped_column(String(40), nullable=True)
     message: Mapped[str] = mapped_column(String(500), default='Mock scan queued')
+    data_source: Mapped[str] = mapped_column(String(10), default='mock', server_default='mock')
 
 
 class RecommendationRow(Base):
@@ -70,6 +71,7 @@ class ExecutionRow(Base):
     created_at: Mapped[str] = mapped_column(String(40), default=now)
     completed_at: Mapped[str | None] = mapped_column(String(40), nullable=True)
     message: Mapped[str] = mapped_column(String(500), default='Simulation queued')
+    simulated: Mapped[bool] = mapped_column(Boolean, default=True, server_default='1')
 
 
 class AuditEvent(Base):
@@ -79,3 +81,39 @@ class AuditEvent(Base):
     action: Mapped[str] = mapped_column(String(100))
     created_at: Mapped[str] = mapped_column(String(40), default=now)
     details: Mapped[dict] = mapped_column(JSON, default=dict)
+
+
+class Preference(Base):
+    __tablename__ = 'preferences'
+    id: Mapped[str] = mapped_column(String(40), primary_key=True)
+    payload: Mapped[dict] = mapped_column(JSON)
+
+
+class User(Base):
+    __tablename__ = 'users'
+    username: Mapped[str] = mapped_column(String(100), primary_key=True)
+    salt: Mapped[str] = mapped_column(String(32))
+    password_hash: Mapped[str] = mapped_column(String(128))
+
+
+class LoginSession(Base):
+    __tablename__ = 'login_sessions'
+    token_hash: Mapped[str] = mapped_column(String(64), primary_key=True)
+    username: Mapped[str] = mapped_column(ForeignKey('users.username'))
+    expires_at: Mapped[str] = mapped_column(String(40))
+
+
+class LoginAttempt(Base):
+    __tablename__ = 'login_attempts'
+    username: Mapped[str] = mapped_column(String(100), primary_key=True)
+    count: Mapped[int] = mapped_column(Integer)
+    updated_at: Mapped[str] = mapped_column(String(40))
+
+
+class Notification(Base):
+    __tablename__ = 'notifications'
+    id: Mapped[str] = mapped_column(String(36), primary_key=True, default=uid)
+    event_key: Mapped[str] = mapped_column(String(200), unique=True)
+    status: Mapped[str] = mapped_column(String(20), default='pending')
+    message: Mapped[str] = mapped_column(String(2000))
+    created_at: Mapped[str] = mapped_column(String(40), default=now)

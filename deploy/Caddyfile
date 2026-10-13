@@ -1,0 +1,9 @@
+{$APP_DOMAIN} {
+    encode gzip
+    reverse_proxy frontend:80
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy same-origin
+        X-Frame-Options DENY
+    }
+}

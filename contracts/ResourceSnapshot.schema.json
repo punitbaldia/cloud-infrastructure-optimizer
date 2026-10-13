@@ -52,6 +52,15 @@
       "title": "Schema Version",
       "type": "string"
     },
+    "data_source": {
+      "default": "mock",
+      "enum": [
+        "mock",
+        "aws"
+      ],
+      "title": "Data Source",
+      "type": "string"
+    },
     "resource_id": {
       "title": "Resource Id",
       "type": "string"
